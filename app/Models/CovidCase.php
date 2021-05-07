@@ -9,6 +9,6 @@ class CovidCase extends Model
 {
     use HasFactory;
 
-    protected $table = 'case';
+    protected $table = 'cases';
 
 }

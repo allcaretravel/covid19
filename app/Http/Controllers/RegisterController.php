@@ -11,26 +11,13 @@ use Auth;
 
 class RegisterController extends Controller
 {
-    public function index(){
-        // echo 'Welcome';
-        $data=Input::except(array('_token'));
+    public function index(Request $request){
 
-        // var_dump($data);
-
-        $rule = array(
+        $validator = Validator::make($request->all(), [
             'username'  =>  'required',
             'email'     =>  'required|email',
-            'password'  =>  'required|min:6',
-            'cpassword' =>  'required|same:password'
-        );
-
-        $message = array(
-            'cpassword.required' => 'the confirm password is required',
-            'cpassword.min'     => 'the confirm password must be at least 6 characters',
-            'cpassword.same'     => 'the confirm password and password must same'
-        );
-
-        $validator = Validator::make($data, $rule, $message);
+            "password" =>   'required|confirmed'
+        ]);
 
         if($validator->fails()){
             return Redirect::to('register')->withErrors($validator);
@@ -41,23 +28,19 @@ class RegisterController extends Controller
         }
     }
 
-    public function login(){
+    public function login(Request $request){
 
-        $data=Input::except(array('_token'));
-
-        // var_dump($data);
-
-        $rule = array(
+        $validator = Validator::make($request->all(), [
             'email'     =>  'required|email',
-            'password'  =>  'required|min:6',
-        );
-
-        $validator = Validator::make($data, $rule);
+            'password'  =>  'required',
+        ]);
 
         if($validator->fails()){
-            return Redirect::to('signin')->withErrors($validator);
+            return Redirect()
+                    ->back()
+                    ->withErrors($validator);
         }else{
-            // $data=Input::except(array('_token'));
+            $data=Input::except(array('_token'));
 
             $userdata = array(
                 'email' => Input::get('email'),

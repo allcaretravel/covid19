@@ -10,16 +10,16 @@ class CovidList extends Model
 {
     use HasFactory;
 
-    protected $table = 'listcovid';
+    protected $table = 'listcovids';
 
     public function sumAmount()
     {
-        return DB::table('listcovid')->sum('amount');
+        return DB::table('listcovids')->sum('amount');
     }
 
     public function sumArea()
     {
-        return DB::table('listcovid')
+        return DB::table('listcovids')
             ->select('area', DB::raw('sum(amount) as Amount'))
             ->groupBy('area')
             ->get();
@@ -27,7 +27,7 @@ class CovidList extends Model
 
     public function sumProvince()
     {
-        return DB::table('listcovid')
+        return DB::table('listcovids')
             ->select('province', DB::raw('sum(amount) as Amount'))
             ->groupBy('province')
             ->get();
@@ -35,7 +35,7 @@ class CovidList extends Model
 
     public function sumCase()
     {
-        return DB::table('listcovid')
+        return DB::table('listcovids')
             ->select('case', DB::raw('sum(amount) as Amount'))
             ->groupBy('case')
             ->get();

@@ -41,7 +41,7 @@
 
         <div class="form-group">
             <label for="pwd">Confirm Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter confirm password" name="cpassword">
+            <input type="password" class="form-control" id="pwd" placeholder="Enter confirm password" name="password_confirmation">
 
             @if($errors->has('cpassword')) <p>{{$errors->first('cpassword')}}</p> @endif
         </div>

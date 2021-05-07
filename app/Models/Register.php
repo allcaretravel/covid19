@@ -17,7 +17,7 @@ class Register extends Authenticatable
 
     use HasFactory;
 
-    protected $table = "register_users";
+    protected $table = "users";
 
     public static function formstore($data){
 

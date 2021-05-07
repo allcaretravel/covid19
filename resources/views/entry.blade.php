@@ -24,8 +24,8 @@
             <label for="area">Area:</label>
             <select name="area" id="area_name" class="form-control input-lg dynamic" data-dependent="province_name">
                     <option value="">Select Area</option>
-                @foreach($value as $data_list)
-                    <option value="{{$data_list->area_name}}">{{$data_list->area_name}}</option>
+                @foreach($value as $data)
+                    <option value="{{$data->area_name}}">{{$data->area_name}}</option>
                 @endforeach
             </select>
 
@@ -48,7 +48,7 @@
             <select name="case" id="case" class="form-control input-lg">
                     <option value="">Select Case</option> 
                 @foreach($case as $case)
-                    <option value="{{$case->case_name}}">{{$case->case_name}}</option>
+                    <option value="{{$case->name}}">{{$case->name}}</option>
                 @endforeach               
             </select>
 

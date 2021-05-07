@@ -6,60 +6,28 @@ use Illuminate\Http\Request;
 use Input;
 use Validator;
 use Redirect;
-use App\Models\CovidEntry;
+use App\Models\CovidArea;
 use App\Models\CovidList;
 use App\Models\CovidCase;
 use DB;
 
 class BackendController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
-    {
-        $store = new CovidList();
+    {        
+        $validator = Validator::make($request->all(), [
+                'area'     =>  'required',
+                'province'  =>  'required',
+                'case'  =>  'required',
+                'date'  =>  'required',
+                'amount'  =>  'required',
+        ]);
 
-        $data=Input::except(array('_token'));
-        
-        $rule = array(
-            'area'     =>  'required',
-            'province'  =>  'required',
-            'case'  =>  'required',
-            'date'  =>  'required',
-            'amount'  =>  'required',
-        );
-
-        $validator = Validator::make($data, $rule);
-
-        if($validator->fails()){
+        if($validator->fails()) {
 
             return Redirect::to('entry')->withErrors($validator);
         }else{
-            
+            $store = new CovidList();
             $store->area        = $request->input('area');
             $store->province    = $request->input('province');
             $store->case    = $request->input('case');
@@ -72,56 +40,11 @@ class BackendController extends Controller
             
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function displayEntry(){
         $case = CovidCase::get();
-        $value = CovidEntry::join('province AS p', 'p.area_id', '=', 'a.area_id')
-            ->select('a.area_name', 'p.province_name')
-            ->groupBy('a.area_name')
+        $value = CovidArea::join('provinces AS p', 'p.area_id', '=', 'a.id')
+            ->select('a.name As area_name', 'p.name As province_name')
+            ->groupBy('a.name')
             ->get();
         return view('entry' ,
                     [
@@ -134,8 +57,8 @@ class BackendController extends Controller
         $select = $request->get('select');
         $value = $request->get('value');
         $dependent = $request->get('dependent');
-        $data = CovidEntry::join('province AS p', 'p.area_id', '=', 'a.area_id')
-                ->select('a.area_name', 'p.province_name')
+        $data = CovidArea::join('provinces AS p', 'p.area_id', '=', 'a.id')
+                ->select('a.name As area_name', 'p.name As province_name')
                 ->where($select, $value)
                 ->groupBy($dependent)
                 ->get();

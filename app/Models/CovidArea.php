@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CovidEntry extends Model
+class CovidArea extends Model
 {
     use HasFactory;
 
-    protected $table = 'area As a';
+    protected $table = 'areas As a';
 }
