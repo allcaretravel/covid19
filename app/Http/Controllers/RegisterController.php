@@ -3,46 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateRegisterRequest;
+use App\Http\Requests\CreateLoginRequest;
 use Input;
 use Validator;
 use Redirect;
-use App\Models\Register;
+use App\Models\User;
 use Auth;
 
 class RegisterController extends Controller
 {
-    public function index(Request $request){
-
-        $validator = Validator::make($request->all(), [
-            'username'  =>  'required',
-            'email'     =>  'required|email',
-            "password" =>   'required|confirmed'
-        ]);
-
-        if($validator->fails()){
-            return Redirect::to('register')->withErrors($validator);
-        } else{
-            Register::formstore(Input::except(array('_token','cpassword')));
+    public function index(CreateRegisterRequest $request)
+    {
+            $user = new User();
+            $user->name     = $request->input('username');
+            $user->email        = $request->input('email');
+            $user->password     = bcrypt($request->input('password'));
+            $user->save();
 
             return Redirect::to('register')->with('success', 'successfully registered');
-        }
     }
 
-    public function login(Request $request){
-
-        $validator = Validator::make($request->all(), [
-            'email'     =>  'required|email',
-            'password'  =>  'required',
-        ]);
-
-        if($validator->fails()){
-            return Redirect()
-                    ->back()
-                    ->withErrors($validator);
-        }else{
-            $data=Input::except(array('_token'));
-
-            $userdata = array(
+    public function login(CreateLoginRequest $request)
+    {
+            $data = array(
                 'email' => Input::get('email'),
                 'password' => Input::get('password')
             );
@@ -52,6 +36,5 @@ class RegisterController extends Controller
             }else{
                 return Redirect::to('signin');
             }
-        }
     }
 }

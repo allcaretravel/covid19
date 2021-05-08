@@ -14,30 +14,31 @@ class CovidList extends Model
 
     public function sumAmount()
     {
-        return DB::table('listcovids')->sum('amount');
+        $sum = CovidList::sum('amount');
+        return $sum;
     }
 
     public function sumArea()
     {
-        return DB::table('listcovids')
-            ->select('area', DB::raw('sum(amount) as Amount'))
-            ->groupBy('area')
-            ->get();
+        $sum = CovidList::select('area', DB::raw('sum(amount) as Amount'))
+                        ->groupBy('area')
+                        ->get();
+        return $sum;
     }
 
     public function sumProvince()
     {
-        return DB::table('listcovids')
-            ->select('province', DB::raw('sum(amount) as Amount'))
-            ->groupBy('province')
-            ->get();
+        $sum = CovidList::select('province', DB::raw('sum(amount) as Amount'))
+                        ->groupBy('province')
+                        ->get();
+        return $sum;
     }
 
     public function sumCase()
     {
-        return DB::table('listcovids')
-            ->select('case', DB::raw('sum(amount) as Amount'))
+        $sum = CovidList::select('case', DB::raw('sum(amount) as Amount'))
             ->groupBy('case')
             ->get();
+        return $sum;
     }
 }

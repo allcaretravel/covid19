@@ -6,27 +6,17 @@ use Illuminate\Http\Request;
 use Input;
 use Validator;
 use Redirect;
+use DB;
 use App\Models\CovidArea;
 use App\Models\CovidList;
 use App\Models\CovidCase;
-use DB;
+use App\Models\CovidProvince;
+use App\Http\Requests\CreateBackendRequest;
 
 class BackendController extends Controller
 {
-    public function store(Request $request)
+    public function store(CreateBackendRequest $request)
     {        
-        $validator = Validator::make($request->all(), [
-                'area'     =>  'required',
-                'province'  =>  'required',
-                'case'  =>  'required',
-                'date'  =>  'required',
-                'amount'  =>  'required',
-        ]);
-
-        if($validator->fails()) {
-
-            return Redirect::to('entry')->withErrors($validator);
-        }else{
             $store = new CovidList();
             $store->area        = $request->input('area');
             $store->province    = $request->input('province');
@@ -36,16 +26,15 @@ class BackendController extends Controller
 
             $store->save();
             return Redirect::to('entry')->with('success', 'successfully submited');
-        }
             
     }
 
-    public function displayEntry(){
-        $case = CovidCase::get();
-        $value = CovidArea::join('provinces AS p', 'p.area_id', '=', 'a.id')
-            ->select('a.name As area_name', 'p.name As province_name')
-            ->groupBy('a.name')
-            ->get();
+    public function displayEntry()
+    {
+        $case = CovidCase::get();       
+        $join = new CovidArea;
+        $value = $join->JoinData();
+        
         return view('entry' ,
                     [
                         'value' => $value,
@@ -53,15 +42,17 @@ class BackendController extends Controller
                     ]);
     }
 
-    public function fetch(Request $request){
+    public function fetch(Request $request)
+    {
         $select = $request->get('select');
         $value = $request->get('value');
-        $dependent = $request->get('dependent');
-        $data = CovidArea::join('provinces AS p', 'p.area_id', '=', 'a.id')
-                ->select('a.name As area_name', 'p.name As province_name')
-                ->where($select, $value)
-                ->groupBy($dependent)
-                ->get();
+        $dependent = $request->get('dependent');  
+        $join = new CovidArea;
+        $data = $join->JoinFetch()
+                      ->where($select, $value)
+                      ->groupBy($dependent)
+                      ->get();
+
         $output = '<option value="">Select Province</option>';
         foreach($data as $row)
         {
@@ -70,8 +61,8 @@ class BackendController extends Controller
         echo $output;
     }
 
-    public function displayListing(){         
-
+    public function displayListing()
+    {         
         $sum_amount = new CovidList;
         $total = $sum_amount->sumAmount();
         $totalArea = $sum_amount->sumArea();
@@ -89,7 +80,8 @@ class BackendController extends Controller
                     ]);
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $sum_amount = new CovidList;
         $total = $sum_amount->sumAmount();
         $totalArea = $sum_amount->sumArea();

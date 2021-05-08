@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CovidCase extends Model
+class CovidProvince extends Model
 {
     use HasFactory;
-    
-    protected $table = 'cases';
 
+    protected $table = 'provinces';
+    
 }
