@@ -13,7 +13,11 @@ use Auth;
 
 class RegisterController extends Controller
 {
-    public function index(CreateRegisterRequest $request)
+    public function createRegister(){
+        return view('register');
+    }
+
+    public function register(CreateRegisterRequest $request)
     {
             $user = new User();
             $user->name     = $request->input('username');
@@ -24,17 +28,33 @@ class RegisterController extends Controller
             return Redirect::to('register')->with('success', 'successfully registered');
     }
 
-    public function login(CreateLoginRequest $request)
-    {
-            $data = array(
-                'email' => Input::get('email'),
-                'password' => Input::get('password')
-            );
+    public function showLogin() {
+        return view('login');
+    }
 
-            if(Auth::attempt($data)){
-                return Redirect::to('entry');
-            }else{
-                return Redirect::to('signin');
-            }
+    public function login(Request $request)
+    {
+        $email  = $request->email;
+        $password   = $request->password;
+
+        $session = User::where('email', $email)->where('password', $password)->get();
+
+        if(count($session)>0){
+            $request->session()->put('user_id', $session[0]->id);
+            $request->session()->put('user_name', $session[0]->name);
+            return Redirect::to('/entry');
+
+        }else{
+            return Redirect::to('/signin');
+        }
+
+    }
+
+    public function logout(Request $request)
+    {
+        $request->session()->forget('user_id');
+        $request->session()->forget('user_name');
+
+        return Redirect::to('/signin');
     }
 }
