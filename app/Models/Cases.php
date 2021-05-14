@@ -4,11 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
-class CovidProvince extends Model
+
+class Cases extends Model
 {
     use HasFactory;
 
-    protected $table = 'provinces';
-    
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
+
 }

@@ -16,9 +16,23 @@ class AreaSeeder extends Seeder
     {
         DB::table('areas')->insert([
             [    
-                'name'  => 'Community'
+                'name'  => 'ToulKok',
+                'province_id' => '1'
             ],[
-                'name'  => 'Foreigner'
+                'name'  => 'ChomChav',
+                'province_id' => '1'
+            ],[
+                'name'  => 'SenSok',
+                'province_id' => '1'
+            ],[
+                'name'  => 'MeanChey',
+                'province_id' => '1'
+            ],[
+                'name'  => 'SrokTrang',
+                'province_id' => '2'
+            ],[
+                'name'  => 'TramKok',
+                'province_id' => '2'
             ]
         ]);
     }

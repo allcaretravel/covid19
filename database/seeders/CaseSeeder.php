@@ -16,13 +16,25 @@ class CaseSeeder extends Seeder
     {
         DB::table('cases')->insert([
             [    
-                'name'  => 'Infection New'
+                'user_id'  => '1',
+                'province_id'  => '1',
+                'area_id'  => '1',
+                'infection_type'  => 'Community',
+                'heal'  => '2',
+                'curing'  => '5',
+                'infection'  => '8',
+                'death'  => '0',
+                'date'  => '5/13/2021'
             ],[
-                'name'  => 'Heal'
-            ],[
-                'name'  => 'Being Treated'
-            ],[
-                'name'  => 'Dead'
+                'user_id'  => '1',
+                'province_id'  => '2',
+                'area_id'  => '2',
+                'infection_type'  => 'Community',
+                'heal'  => '7',
+                'curing'  => '1',
+                'infection'  => '4',
+                'death'  => '0',
+                'date'  => '5/13/2021'
             ]
         ]);
     }

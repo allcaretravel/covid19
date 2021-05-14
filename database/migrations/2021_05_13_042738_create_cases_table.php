@@ -15,7 +15,15 @@ class CreateCasesTable extends Migration
     {
         Schema::create('cases', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->integer('user_id');
+            $table->integer('province_id');
+            $table->integer('area_id');
+            $table->string('infection_type');
+            $table->integer('heal');
+            $table->integer('curing');
+            $table->integer('infection');
+            $table->integer('death');
+            $table->date('date');
             $table->timestamps();
         });
     }

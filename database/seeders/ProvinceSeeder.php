@@ -16,35 +16,9 @@ class ProvinceSeeder extends Seeder
     {
         DB::table('provinces')->insert([
             [    
-                'area_id'  => '1',
                 'name'  => 'Phnom Penh'
             ],[
-                'area_id'  => '1',
-                'name'  => 'Takmao'
-            ],[
-                'area_id'  => '1',
-                'name'  => 'Kondal'
-            ],[
-                'area_id'  => '1',
-                'name'  => 'KomPongSaom'
-            ],[
-                'area_id'  => '1',
-                'name'  => 'Takeo'
-            ],[
-                'area_id'  => '2',
-                'name'  => 'Chaina'
-            ],[
-                'area_id'  => '2',
-                'name'  => 'Vietnam'
-            ],[
-                'area_id'  => '2',
-                'name'  => 'Thailand'
-            ],[
-                'area_id'  => '2',
-                'name'  => 'India'
-            ],[
-                'area_id'  => '2',
-                'name'  => 'Lao'
+                'name'  => 'TaKeo'
             ]
         ]);
     }

@@ -17,7 +17,7 @@
     </div>
     <ul class="nav navbar-nav">
 
-      {{-- @if(Auth::user()) login success show two case --}}
+    @if(Session::get('user'))
 
       <li class="active"><a href="/entry">Case entry</a></li>
       <li><a href="/listing">Case listing</a></li>
@@ -25,17 +25,17 @@
     <ul class="nav navbar-nav navbar-right">
       <li>
         <a href="{{URL::to('/signout')}}">
-          <span style="color: white; margin-right: 10px">{{-- ucwords(Auth::user()->name) --}}</span>  <!--  login success show user name in nav bar  -->
+          <span style="color: white; margin-right: 10px">{{ Session::get('user') }}</span>  <!--  login success show user name in nav bar  -->
           <span class="glyphicon glyphicon-log-in"></span> Sign Out
         </a>
       </li>
       
-      {{-- @else --}}
+      @else
 
       <li><a href="{{URL::to('/register')}}"><span class="glyphicon glyphicon-user"></span> Create Account</a></li>
       <li><a href="{{URL::to('/signin')}}"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
     
-    {{--  @endif --}}
+      @endif
     </ul>
   </div>
 </nav>
