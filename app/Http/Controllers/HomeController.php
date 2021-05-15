@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Province;
 use App\Models\Cases;
 use Redirect;
+use App\Http\Requests\CreateHomeRequest;
 
 class HomeController extends Controller
 {
@@ -26,14 +27,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $join = new Province;
-        $value = $join->JoinData();
-        
-        return view('home' ,['value' => $value]);
+        return view('home');
     }
 
     
-    public function store(Request $request){
+    public function store(CreateHomeRequest $request){
 
         $store = new Cases();
         $store->user_id      = auth()->user()->id;
@@ -48,5 +46,11 @@ class HomeController extends Controller
 
         $store->save();
         return Redirect::to('home')->with('success', 'successfully submited');
+    }
+
+    public function show()
+    {
+        $data = Cases::get();
+        return view('showlist', ['data' => $data]);
     }
 }

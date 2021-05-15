@@ -4,7 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRegisterRequest extends FormRequest
+
+class CreateHomeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,6 +14,7 @@ class CreateRegisterRequest extends FormRequest
      */
     public function authorize()
     {
+        // return false;
         return true;
     }
 
@@ -24,9 +26,14 @@ class CreateRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'username'  =>  'required',
-            'email'     =>  'required|email',
-            'password' =>   'required|confirmed'
+            'country'  =>  'required',
+            'area'  =>  'required',
+            'infec'  =>  'required',
+            'heal'  =>  'required',
+            'curing'  =>  'required',
+            'infection'  =>  'required',
+            'death'  =>  'required',
+            'date'  =>  'required',
         ];
     }
 }

@@ -50,7 +50,7 @@
 <!--  -->
         <div class="form-group">
             <label for="date">Date:</label>
-            <input type="date" class="form-control" id="date" name="date">
+            <input type="date" class="form-control" id="date" name="date" required>
 
         </div>
 

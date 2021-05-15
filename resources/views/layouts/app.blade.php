@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @livewireStyles
 </head>
 <body>
     <div id="app">
@@ -29,7 +30,7 @@
                 <a style="font-size: 0.9rem" class="navbar-brand" href="{{ url('/home') }}">
                     Entry Case
                 </a>
-                <a style="font-size: 0.9rem" class="navbar-brand" href="{{ url('/') }}">
+                <a style="font-size: 0.9rem" class="navbar-brand" href="{{ url('/list') }}">
                     Entry List
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -85,5 +86,7 @@
             @yield('content')
         </main>
     </div>
+
+    @livewireScripts
 </body>
 </html>

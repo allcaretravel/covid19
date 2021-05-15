@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/entry', [App\Http\Controllers\HomeController::class, 'store'])->name('entry');
-
+Route::group(['middleware' => ['back']], function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::post('/entry', [App\Http\Controllers\HomeController::class, 'store'])->name('entry');
+    Route::get('/list', [App\Http\Controllers\HomeController::class, 'show'])->name('list');
+});

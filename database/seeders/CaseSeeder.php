@@ -24,7 +24,7 @@ class CaseSeeder extends Seeder
                 'curing'  => '5',
                 'infection'  => '8',
                 'death'  => '0',
-                'date'  => '5/13/2021'
+                'date'  => '2021-13-5'
             ],[
                 'user_id'  => '1',
                 'province_id'  => '2',
@@ -34,7 +34,7 @@ class CaseSeeder extends Seeder
                 'curing'  => '1',
                 'infection'  => '4',
                 'death'  => '0',
-                'date'  => '5/13/2021'
+                'date'  => '2021-13-5'
             ]
         ]);
     }
