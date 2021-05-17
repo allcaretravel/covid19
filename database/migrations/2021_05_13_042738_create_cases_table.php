@@ -23,7 +23,6 @@ class CreateCasesTable extends Migration
             $table->integer('curing');
             $table->integer('infection');
             $table->integer('death');
-            $table->date('date');
             $table->timestamps();
         });
     }

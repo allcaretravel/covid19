@@ -47,13 +47,6 @@
                 <input type="text" class="form-control" id="death" name="death" placeholder="Death" required>
             </div>
         </div>
-<!--  -->
-        <div class="form-group">
-            <label for="date">Date:</label>
-            <input type="date" class="form-control" id="date" name="date" required>
-
-        </div>
-
 
         <button type="submit" class="btn btn-default">SUBMIT</button>
     </form>

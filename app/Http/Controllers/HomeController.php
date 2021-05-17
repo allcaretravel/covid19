@@ -33,24 +33,23 @@ class HomeController extends Controller
     
     public function store(CreateHomeRequest $request){
 
-        $store = new Cases();
-        $store->user_id      = auth()->user()->id;
-        $store->province_id    = $request->input('country');
-        $store->area_id     = $request->input('area');
-        $store->infection_type = $request->input('infec');
-        $store->heal    = $request->input('heal');
-        $store->curing    = $request->input('curing');
-        $store->infection    = $request->input('infection');
-        $store->death    = $request->input('death');
-        $store->date    = $request->input('date');
+        Cases::create([
+            'user_id'      => auth()->user()->id,
+            'province_id'    => $request->input('province'),
+            'area_id'     => $request->input('area'),
+            'infection_type' => $request->input('infec'),
+            'heal'    => $request->input('heal'),
+            'curing'    => $request->input('curing'),
+            'infection'    => $request->input('infection'),
+            'death'    => $request->input('death'),
+        ]);
 
-        $store->save();
         return Redirect::to('home')->with('success', 'successfully submited');
     }
 
     public function show()
     {
-        $data = Cases::get();
+        $data = Cases::simplePaginate(8);
         return view('showlist', ['data' => $data]);
     }
 }

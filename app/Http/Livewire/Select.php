@@ -8,20 +8,20 @@ use Livewire\Component;
 
 class Select extends Component
 {
-    public $countryc;
+    public $province;
     public $areas = [];
     public $area;   
     
     public function render()
     {
-        if(!empty($this->countryc)) {
-            $this->areas = Area::where('province_id', $this->countryc)->get();
+        if(!empty($this->province)) {
+            $this->areas = Area::where('province_id', $this->province)->get();
         }
 
-        $countries = Province::orderBy('name')->get();
+        $provinces = Province::orderBy('name')->get();
 
         return view('livewire.select')->with([
-                'countries' => $countries
+                'provinces' => $provinces
         ]);
     }
 }

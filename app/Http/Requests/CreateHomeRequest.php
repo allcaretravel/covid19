@@ -26,14 +26,13 @@ class CreateHomeRequest extends FormRequest
     public function rules()
     {
         return [
-            'country'  =>  'required',
+            'province'  =>  'required',
             'area'  =>  'required',
             'infec'  =>  'required',
             'heal'  =>  'required',
             'curing'  =>  'required',
             'infection'  =>  'required',
-            'death'  =>  'required',
-            'date'  =>  'required',
+            'death'  =>  'required'
         ];
     }
 }

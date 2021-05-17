@@ -13,6 +13,8 @@ class Cases extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'province_id', 'area_id', 'infection_type', 'heal', 'curing', 'infection', 'death'];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

@@ -1,10 +1,10 @@
 <div>
     <div class="form-group">
-        <label>Country:</label>
-        <select name="country"  wire:model="countryc" class="form-control input-lg"> 
-                <option>Choose a country</option>
-                @foreach($countries as $country)
-                    <option value='{{$country->id}}'>{{$country->name}}</option>
+        <label>Province:</label>
+        <select name="province"  wire:model="province" class="form-control input-lg"> 
+                <option>Choose a province</option>
+                @foreach($provinces as $province)
+                    <option value='{{$province->id}}'>{{$province->name}}</option>
                 @endforeach
         </select>
     </div>

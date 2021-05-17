@@ -18,20 +18,22 @@
             <th>Death</th>
             <th>Date</th>
         </tr>
-        @foreach($data as $id => $data)
+        @foreach($data as $id => $value)
         <tr>
             <td>{{++$id}}</td>
-            <td>{{$data->user->name}}</td>
-            <td>{{$data->province->name}}</td>
-            <td>{{$data->area->name}}</td>
-            <td>{{$data->infection_type}}</td>
-            <td>{{$data->heal}}</td>
-            <td>{{$data->curing}}</td>
-            <td>{{$data->infection}}</td>
-            <td>{{$data->death}}</td>
-            <td>{{$data->date}}</td>
+            <td>{{$value->user->name}}</td>
+            <td>{{$value->province->name}}</td>
+            <td>{{$value->area->name}}</td>
+            <td>{{$value->infection_type}}</td>
+            <td>{{$value->heal}}</td>
+            <td>{{$value->curing}}</td>
+            <td>{{$value->infection}}</td>
+            <td>{{$value->death}}</td>
+            <td>{{$value->created_at}}</td>
         </tr>
         @endforeach
-    </table>      
+    </table>   
+    
+    {{ $data->links() }}   
 </div>
 @endsection
