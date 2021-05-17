@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\BackendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,35 +14,13 @@ use App\Http\Controllers\BackendController;
 */
 
 Route::get('/', function () {
-    return view('index');
-    // resouce/views/welcome.blade
+    return view('welcome');
 });
 
-Route::get('/signin', function () {
-    return view('login');
-    // resouce/views/login.blade
+Auth::routes();
+
+Route::group(['middleware' => ['back']], function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::post('/entry', [App\Http\Controllers\HomeController::class, 'store'])->name('entry');
+    Route::get('/list', [App\Http\Controllers\HomeController::class, 'show'])->name('list');
 });
-
-Route::get('/register', function () {
-    return view('register');
-    // resouce/views/register.blade
-});
-
-Route::post('/register_action', [RegisterController::class, 'index']);
-
-Route::post('/entry', [RegisterController::class, 'login']);
-
-Route::get('/signout', function() {
-    Auth::logout();
-
-    return Redirect::to('signin');
-})->middleware('auth');
-
-Route::resource('covid',  BackendController::class);
-
-Route::get('/entry', [BackendController::class, 'displayEntry'])->middleware('auth');
-Route::post('entry/fetch', [BackendController::class, 'fetch'])->name('dynamicdependent.fetch');
-
-Route::get('/listing', [BackendController::class, 'displayListing'])->middleware('auth');
-
-Route::get('/search', [BackendController::class, 'search'])->middleware('auth');
