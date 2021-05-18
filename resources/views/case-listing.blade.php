@@ -10,14 +10,7 @@
                         <div class="form-group row">
                             <div class="col-sm-6 col-xs-12">
                                 <label for="">Province</label>
-                                <select name="province_id" class="form-control">
-                                    <option value="">Please Select</option>
-                                    @if(count($province) > 0)
-                                        @foreach($province as $key => $pro)
-                                            <option value="{{$key}}">{{$pro}}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
+                                @include('province-select')
                             </div>
                             <div class="col-sm-6 col-xs-12">
                                 <label for="">Date</label>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CovidCaseRequest;
+use App\Http\Requests\ProvinceStoreRequest;
 use App\Models\Models\CovidCaseModel;
 use App\Models\Models\ProvinceModel;
 use Illuminate\Http\Request;
@@ -17,8 +18,7 @@ class BackendController extends Controller
 
     public function entry()
     {
-        $province = ProvinceModel::pluck('name','id');
-        return view('case-entry',compact('province'));
+        return view('case-entry');
     }
 
     public function StoreEntry(CovidCaseRequest $request)
@@ -31,7 +31,6 @@ class BackendController extends Controller
 
     public function CaseListing(Request $request)
     {
-        $province = ProvinceModel::pluck('name','id');
         $query = CovidCaseModel::query();
         if($request->isMethod('POST'))
         {
@@ -56,17 +55,14 @@ class BackendController extends Controller
             DB::raw("SUM(community_case) AS community_case"),
             DB::raw("SUM(foreigner_case) AS foreigner_case")
         )->groupBy('province_id')->groupBy('date')->get();
-        return view('case-listing',compact('case','sum_case','sum_deaths','sum_recovered','sum_community','sum_foreigner','province'));
+        return view('case-listing',compact('case','sum_case','sum_deaths','sum_recovered','sum_community','sum_foreigner'));
     }
     public function CreateProvince()
     {
         return view('create-province');
     }
-    public function StoreProvince(Request $request)
+    public function StoreProvince(ProvinceStoreRequest $request)
     {
-        $request->validate([
-           'name' => 'required|unique:provinces|max:255'
-        ]);
         ProvinceModel::insert([
            'name' => $request->name
         ]);

@@ -6,7 +6,6 @@ use App\Http\Requests\UserStoreRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -19,7 +18,7 @@ class RegisterController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user->password = $request->password;
         $user->save();
         return redirect()->route('SignIn')->with('success','Register success');
     }

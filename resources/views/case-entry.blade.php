@@ -20,17 +20,7 @@
                     </div>
                     <div class="col-sm-6 col-xs-12">
                         <label for="">Province</label>
-                        <select name="province_id" class="form-control @error('province_id') is-invalid @enderror">
-                            <option value="">Please Select</option>
-                            @if(count($province) > 0)
-                                @foreach($province as $key => $pro)
-                                    <option value="{{$key}}">{{$pro}}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                        @error('province_id')
-                        <div class="invalid-feedback">{{$message}}</div>
-                        @enderror
+                        @include('province-select')
                     </div>
                 </div>
                 <div class="form-group row">
