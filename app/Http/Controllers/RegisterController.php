@@ -2,39 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests\CreateRegisterRequest;
-use App\Http\Requests\CreateLoginRequest;
-use Input;
-use Validator;
-use Redirect;
 use App\Models\User;
-use Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    public function index(CreateRegisterRequest $request)
+    public function create_account()
     {
-            $user = new User();
-            $user->name     = $request->input('username');
-            $user->email        = $request->input('email');
-            $user->password     = bcrypt($request->input('password'));
-            $user->save();
-
-            return Redirect::to('register')->with('success', 'successfully registered');
+        return view('create-account');
     }
-
-    public function login(CreateLoginRequest $request)
+    public function register(Request $request)
     {
-            $data = array(
-                'email' => Input::get('email'),
-                'password' => Input::get('password')
-            );
-
-            if(Auth::attempt($data)){
-                return Redirect::to('entry');
-            }else{
-                return Redirect::to('signin');
-            }
+        $request->validate([
+           'name' => 'required',
+           'email' => 'required|unique:users',
+           'password' => 'required|min:6',
+           'confirm_password' => 'required|min:6|same:password',
+        ]);
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->route('sign_in')->with('success','Register success');
+    }
+    public function sign_in_form()
+    {
+        return view('sign-in');
+    }
+    public function sign_in(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        $credentials = $request->only('email', 'password');
+        if(Auth::attempt($credentials)){
+            return redirect('/');
+        }
+        return redirect()->back()->with('error','Login Fails');
+    }
+    public function sign_out()
+    {
+        Auth::logout();
+        return redirect('/');
     }
 }
