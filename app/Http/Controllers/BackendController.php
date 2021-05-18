@@ -16,7 +16,7 @@ class BackendController extends Controller
         $this->middleware('auth');
     }
 
-    public function entry()
+    public function Entry()
     {
         return view('case-entry');
     }

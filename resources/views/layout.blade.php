@@ -24,8 +24,8 @@
                     <li class="nav-item {{request()->routeIs('ProvinceList') ? 'active' : ''}}">
                         <a class="nav-link" href="{{route('ProvinceList')}}">Province</a>
                     </li>
-                    <li class="nav-item {{request()->routeIs('entry') ? 'active' : ''}}">
-                        <a class="nav-link" href="{{route('entry')}}">Case Entry</a>
+                    <li class="nav-item {{request()->routeIs('Entry') ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('Entry')}}">Case Entry</a>
                     </li>
                     <li class="nav-item {{request()->routeIs('listing') ? 'active' : ''}}">
                         <a class="nav-link" href="{{route('listing')}}">Case Listing</a>

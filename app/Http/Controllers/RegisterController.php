@@ -13,7 +13,7 @@ class RegisterController extends Controller
     {
         return view('create-account');
     }
-    public function register(UserStoreRequest $request)
+    public function Register(UserStoreRequest $request)
     {
         $user = new User();
         $user->name = $request->name;

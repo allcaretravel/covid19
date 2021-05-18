@@ -1,7 +1,7 @@
 @extends('layout')
 @section('title','Create Account')
 @section('content')
-    <form action="{{route('register')}}" method="POST">
+    <form action="{{route('Register')}}" method="POST">
         @csrf
         <div class="row justify-content-center">
             <div class="col-sm-8">

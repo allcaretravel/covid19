@@ -19,13 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('register',[RegisterController::class,'CreateAccount'])->name('CreateAccount');
-Route::post('register',[RegisterController::class,'register'])->name('register');
-Route::get('SignIn',[RegisterController::class,'SignInForm'])->name('SignInForm');
-Route::post('SignIn',[RegisterController::class,'SignIn'])->name('SignIn');
-Route::get('SignOut',[RegisterController::class,'SignOut'])->name('SignOut');
+Route::post('register',[RegisterController::class,'Register'])->name('Register');
+Route::get('sign-in',[RegisterController::class,'SignInForm'])->name('SignInForm');
+Route::post('sign-in',[RegisterController::class,'SignIn'])->name('SignIn');
+Route::get('sign-out',[RegisterController::class,'SignOut'])->name('SignOut');
 
 
-Route::get('entry',[BackendController::class,'entry'])->name('entry');
+Route::get('entry',[BackendController::class,'Entry'])->name('Entry');
 Route::post('entry',[BackendController::class,'StoreEntry'])->name('StoreEntry');
 Route::any('listing',[BackendController::class,'CaseListing'])->name('listing');
 Route::get('provinces',[BackendController::class,'ProvinceList'])->name('ProvinceList');
