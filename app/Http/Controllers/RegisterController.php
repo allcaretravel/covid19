@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserStoreRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,30 +10,24 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    public function create_account()
+    public function CreateAccount()
     {
         return view('create-account');
     }
-    public function register(Request $request)
+    public function register(UserStoreRequest $request)
     {
-        $request->validate([
-           'name' => 'required',
-           'email' => 'required|unique:users',
-           'password' => 'required|min:6',
-           'confirm_password' => 'required|min:6|same:password',
-        ]);
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
-        return redirect()->route('sign_in')->with('success','Register success');
+        return redirect()->route('SignIn')->with('success','Register success');
     }
-    public function sign_in_form()
+    public function SignInForm()
     {
         return view('sign-in');
     }
-    public function sign_in(Request $request)
+    public function SignIn(Request $request)
     {
         $request->validate([
             'email' => 'required',
@@ -44,7 +39,7 @@ class RegisterController extends Controller
         }
         return redirect()->back()->with('error','Login Fails');
     }
-    public function sign_out()
+    public function SignOut()
     {
         Auth::logout();
         return redirect('/');

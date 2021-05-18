@@ -21,8 +21,8 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             @if(Auth::user())
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item {{request()->routeIs('province_list') ? 'active' : ''}}">
-                        <a class="nav-link" href="{{route('province_list')}}">Province</a>
+                    <li class="nav-item {{request()->routeIs('ProvinceList') ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('ProvinceList')}}">Province</a>
                     </li>
                     <li class="nav-item {{request()->routeIs('entry') ? 'active' : ''}}">
                         <a class="nav-link" href="{{route('entry')}}">Case Entry</a>
@@ -33,16 +33,16 @@
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a href="{{route('sign_out')}}" class="nav-link"><span class="mr-3">{{ucfirst(Auth::user()->name)}}</span> <span class="fa fa-sign-out"> Sign Out</span></a>
+                        <a href="{{route('SignOut')}}" class="nav-link"><span class="mr-3">{{ucfirst(Auth::user()->name)}}</span> <span class="fa fa-sign-out"> Sign Out</span></a>
                     </li>
                 </ul>
             @else
                 <ul class="navbar-nav">
-                    <li class="nav-item {{request()->routeIs('create_account') ? 'active' : ''}}">
-                        <a class="nav-link" href="{{route('create_account')}}">Create Account</a>
+                    <li class="nav-item {{request()->routeIs('CreateAccount') ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('CreateAccount')}}">Create Account</a>
                     </li>
-                    <li class="nav-item {{request()->routeIs('sign_in_form') ? 'active' : ''}}">
-                        <a class="nav-link" href="{{route('sign_in_form')}}"><span class="fa fa-sign-in mr-1"> </span> Sign In</a>
+                    <li class="nav-item {{request()->routeIs('SignInForm') ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('SignInForm')}}"><span class="fa fa-sign-in mr-1"> </span> Sign In</a>
                     </li>
                 </ul>
             @endif

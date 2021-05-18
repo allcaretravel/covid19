@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CovidCaseRequest;
 use App\Models\Models\CovidCaseModel;
 use App\Models\Models\ProvinceModel;
 use Illuminate\Http\Request;
@@ -20,24 +21,15 @@ class BackendController extends Controller
         return view('case-entry',compact('province'));
     }
 
-    public function store_entry(Request $request)
+    public function StoreEntry(CovidCaseRequest $request)
     {
-        $request->validate([
-           'province_id' => 'required',
-           'total' => 'required',
-           'recovered' => 'required',
-           'deaths' => 'required',
-           'community_case' => 'required',
-           'foreigner_case' => 'required',
-           'date' => 'required|date',
-        ]);
         $input = $request->all();
         $input['date'] = date('Y-m-d',strtotime($input['date']));
         CovidCaseModel::create($input);
         return redirect('/listing');
     }
 
-    public function case_listing(Request $request)
+    public function CaseListing(Request $request)
     {
         $province = ProvinceModel::pluck('name','id');
         $query = CovidCaseModel::query();
@@ -66,11 +58,11 @@ class BackendController extends Controller
         )->groupBy('province_id')->groupBy('date')->get();
         return view('case-listing',compact('case','sum_case','sum_deaths','sum_recovered','sum_community','sum_foreigner','province'));
     }
-    public function create_province()
+    public function CreateProvince()
     {
         return view('create-province');
     }
-    public function store_province(Request $request)
+    public function StoreProvince(Request $request)
     {
         $request->validate([
            'name' => 'required|unique:provinces|max:255'
@@ -80,7 +72,7 @@ class BackendController extends Controller
         ]);
         return redirect('/provinces');
     }
-    public function province_list()
+    public function ProvinceList()
     {
         $provinces = ProvinceModel::select('name')->get();
         return view('provinces',compact('provinces'));

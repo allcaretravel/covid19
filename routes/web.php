@@ -18,16 +18,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('register',[RegisterController::class,'create_account'])->name('create_account');
+Route::get('register',[RegisterController::class,'CreateAccount'])->name('CreateAccount');
 Route::post('register',[RegisterController::class,'register'])->name('register');
-Route::get('sign_in',[RegisterController::class,'sign_in_form'])->name('sign_in_form');
-Route::post('sign_in',[RegisterController::class,'sign_in'])->name('sign_in');
-Route::get('sign_out',[RegisterController::class,'sign_out'])->name('sign_out');
+Route::get('SignIn',[RegisterController::class,'SignInForm'])->name('SignInForm');
+Route::post('SignIn',[RegisterController::class,'SignIn'])->name('SignIn');
+Route::get('SignOut',[RegisterController::class,'SignOut'])->name('SignOut');
 
 
 Route::get('entry',[BackendController::class,'entry'])->name('entry');
-Route::post('entry',[BackendController::class,'store_entry'])->name('store_entry');
-Route::any('listing',[BackendController::class,'case_listing'])->name('listing');
-Route::get('provinces',[BackendController::class,'province_list'])->name('province_list');
-Route::get('create-province',[BackendController::class,'create_province'])->name('create_province');
-Route::post('provinces',[BackendController::class,'store_province'])->name('store_province');
+Route::post('entry',[BackendController::class,'StoreEntry'])->name('StoreEntry');
+Route::any('listing',[BackendController::class,'CaseListing'])->name('listing');
+Route::get('provinces',[BackendController::class,'ProvinceList'])->name('ProvinceList');
+Route::get('create-province',[BackendController::class,'CreateProvince'])->name('CreateProvince');
+Route::post('provinces',[BackendController::class,'StoreProvince'])->name('StoreProvince');

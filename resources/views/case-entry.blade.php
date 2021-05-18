@@ -8,7 +8,7 @@
                     <h3>Case Entry</h3>
                 </div>
             </div>
-            <form action="{{route('store_entry')}}" autocomplete="off" method="POST">
+            <form action="{{route('StoreEntry')}}" autocomplete="off" method="POST">
                 @csrf
                 <div class="form-group row">
                     <div class="col-sm-6 col-xs-12">

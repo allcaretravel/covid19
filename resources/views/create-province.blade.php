@@ -3,7 +3,7 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-sm-8 col-xs-12">
-            <form action="{{route('store_province')}}" method="POST">
+            <form action="{{route('StoreProvince')}}" method="POST">
                 @csrf
                 <div class="form-group row">
                     <div class="col-sm-12 col-xs-12">
