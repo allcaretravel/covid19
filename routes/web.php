@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::get('register',[RegisterController::class,'CreateAccount'])->name('CreateAccount');
 Route::post('register',[RegisterController::class,'register'])->name('register');
 Route::get('SignIn',[RegisterController::class,'SignInForm'])->name('SignInForm');
