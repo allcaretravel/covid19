@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth:sanctum'] ,function (){
-    Route::get('/listing',[CovidCaseController::class,'listing']);
+    Route::get('/listing',[CovidCaseController::class,'Listing']);
 });
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'Register']);
+Route::post('/login', [AuthController::class, 'Login']);

@@ -55,7 +55,7 @@ class BackendController extends Controller
             DB::raw("SUM(community_case) AS community_case"),
             DB::raw("SUM(foreigner_case) AS foreigner_case")
         )->groupBy('province_id')->groupBy('date')->get();
-        return view('case-listing',compact('case','sum_case','sum_deaths','sum_recovered','sum_community','sum_foreigner'));
+        return view('case-Listing',compact('case','sum_case','sum_deaths','sum_recovered','sum_community','sum_foreigner'));
     }
     public function CreateProvince()
     {

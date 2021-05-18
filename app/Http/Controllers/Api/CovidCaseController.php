@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class CovidCaseController extends Controller
 {
-    public function listing(Request $request)
+    public function Listing(Request $request)
     {
         $province = $request->input('province');
         $date = $request->input('date');
