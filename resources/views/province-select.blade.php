@@ -1,5 +1,5 @@
 @php
-    $province = \App\Models\Models\ProvinceModel::pluck('name','id');
+    $province = \App\Models\Models\Province::pluck('name','id');
 @endphp
 <select name="province_id" class="form-control @error('province_id') is-invalid @enderror">
     <option value="">Please Select</option>

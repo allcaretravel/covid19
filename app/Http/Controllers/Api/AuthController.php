@@ -30,8 +30,7 @@ class AuthController extends Controller
                 'message' => 'Login Fails'
             ], 401);
         }
-        $user = User::where('email', $request['email'])->firstOrFail();
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = Auth::user()->createToken('auth_token')->plainTextToken;
         return response()->json([
             'token' => $token,
         ]);

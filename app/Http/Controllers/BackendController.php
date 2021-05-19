@@ -4,17 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CovidCaseRequest;
 use App\Http\Requests\ProvinceStoreRequest;
-use App\Models\Models\CovidCaseModel;
-use App\Models\Models\ProvinceModel;
+use App\Models\Models\CovidCase;
+use App\Models\Models\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BackendController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function Entry()
     {
@@ -23,25 +19,18 @@ class BackendController extends Controller
 
     public function StoreEntry(CovidCaseRequest $request)
     {
-        $input = $request->all();
+        $input = $request->validated();
         $input['date'] = date('Y-m-d',strtotime($input['date']));
-        CovidCaseModel::create($input);
+        CovidCase::create($input);
         return redirect('/listing');
     }
 
     public function CaseListing(Request $request)
     {
-        $query = CovidCaseModel::query();
+        $query = CovidCase::query();
         if($request->isMethod('POST'))
         {
-            if($request->province_id)
-            {
-                $query->where('province_id',$request->province_id);
-            }
-            if($request->date)
-            {
-                $query->where('date',date('Y-m-d',strtotime($request->date)));
-            }
+            $query->search($request->province_id,$request->date);
         }
         $sum_case = $query->sum('total');
         $sum_deaths = $query->sum('deaths');
@@ -63,14 +52,14 @@ class BackendController extends Controller
     }
     public function StoreProvince(ProvinceStoreRequest $request)
     {
-        ProvinceModel::insert([
+        Province::insert([
            'name' => $request->name
         ]);
         return redirect('/provinces');
     }
     public function ProvinceList()
     {
-        $provinces = ProvinceModel::select('name')->get();
+        $provinces = Province::select('name')->get();
         return view('provinces',compact('provinces'));
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Models\CovidCaseModel;
+use App\Models\Models\CovidCase;
 use Illuminate\Database\Seeder;
 
 class CovidCaseTableSeeder extends Seeder
@@ -34,6 +34,6 @@ class CovidCaseTableSeeder extends Seeder
                 'date' => date('Y-m-d')
             ],
         ];
-        CovidCaseModel::insert($data);
+        CovidCase::insert($data);
     }
 }

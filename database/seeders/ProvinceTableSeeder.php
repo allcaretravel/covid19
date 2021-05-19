@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Models\ProvinceModel;
+use App\Models\Models\Province;
 use Illuminate\Database\Seeder;
 
 class ProvinceTableSeeder extends Seeder
@@ -14,7 +14,7 @@ class ProvinceTableSeeder extends Seeder
      */
     public function run()
     {
-        ProvinceModel::insert([
+        Province::insert([
            [
                'id' => 1,
                'name' => 'Phnom Penh'

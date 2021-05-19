@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCovidCaseTable extends Migration
+class CreateCovidCasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCovidCaseTable extends Migration
      */
     public function up()
     {
-        Schema::create('covid_case', function (Blueprint $table) {
+        Schema::create('covid_cases', function (Blueprint $table) {
             $table->id();
             $table->integer('province_id');
             $table->string('community_case')->nullable();
