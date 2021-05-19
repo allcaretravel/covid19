@@ -1,0 +1,14 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// style
+@import 'styles/_style.scss';
+@import 'styles/admin/_style.scss';
+
+@import '~jquery-ui/themes/base/all.css';
