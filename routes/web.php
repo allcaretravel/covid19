@@ -18,18 +18,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('register',[RegisterController::class,'CreateAccount'])->name('CreateAccount');
-Route::post('register',[RegisterController::class,'Register'])->name('Register');
-Route::get('sign-in',[RegisterController::class,'SignInForm'])->name('SignInForm');
-Route::post('sign-in',[RegisterController::class,'SignIn'])->name('SignIn');
-Route::get('sign-out',[RegisterController::class,'SignOut'])->name('SignOut');
+Route::get('register',[RegisterController::class,'createAccount'])->name('CreateAccount');
+Route::post('register',[RegisterController::class,'register'])->name('Register');
+Route::get('sign-in',[RegisterController::class,'signInForm'])->name('SignInForm');
+Route::post('sign-in',[RegisterController::class,'signIn'])->name('SignIn');
+Route::get('sign-out',[RegisterController::class,'signOut'])->name('SignOut');
 
 
 Route::group(['middleware' => 'auth'],function (){
-    Route::get('entry',[BackendController::class,'Entry'])->name('Entry');
-    Route::post('entry',[BackendController::class,'StoreEntry'])->name('StoreEntry');
-    Route::any('listing',[BackendController::class,'CaseListing'])->name('listing');
-    Route::get('provinces',[BackendController::class,'ProvinceList'])->name('ProvinceList');
-    Route::get('create-province',[BackendController::class,'CreateProvince'])->name('CreateProvince');
-    Route::post('provinces',[BackendController::class,'StoreProvince'])->name('StoreProvince');
+    Route::get('entry',[BackendController::class,'entry'])->name('Entry');
+    Route::post('entry',[BackendController::class,'storeEntry'])->name('StoreEntry');
+    Route::any('listing',[BackendController::class,'caseListing'])->name('listing');
+    Route::get('provinces',[BackendController::class,'provinceList'])->name('ProvinceList');
+    Route::get('create-province',[BackendController::class,'createProvince'])->name('CreateProvince');
+    Route::post('provinces',[BackendController::class,'storeProvince'])->name('StoreProvince');
 });

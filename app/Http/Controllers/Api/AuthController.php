@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
 
-    public function Register(UserStoreRequest $request)
+    public function register(UserStoreRequest $request)
     {
         $user = User::create([
             'name' => $request->name,
@@ -23,7 +23,7 @@ class AuthController extends Controller
             'token' => $token,
         ]);
     }
-    public function Login(Request $request)
+    public function login(Request $request)
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([

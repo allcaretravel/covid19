@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function CreateAccount()
+    public function createAccount()
     {
         return view('create-account');
     }
-    public function Register(UserStoreRequest $request)
+    public function register(UserStoreRequest $request)
     {
         $user = new User();
         $user->name = $request->name;
@@ -22,11 +22,11 @@ class RegisterController extends Controller
         $user->save();
         return redirect()->route('SignIn')->with('success','Register success');
     }
-    public function SignInForm()
+    public function signInForm()
     {
         return view('sign-in');
     }
-    public function SignIn(Request $request)
+    public function signIn(Request $request)
     {
         $request->validate([
             'email' => 'required',
@@ -38,7 +38,7 @@ class RegisterController extends Controller
         }
         return redirect()->back()->with('error','Login Fails');
     }
-    public function SignOut()
+    public function signOut()
     {
         Auth::logout();
         return redirect('/');

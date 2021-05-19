@@ -11,13 +11,12 @@ use Illuminate\Support\Facades\DB;
 
 class BackendController extends Controller
 {
-
-    public function Entry()
+    public function entry()
     {
         return view('case-entry');
     }
 
-    public function StoreEntry(CovidCaseRequest $request)
+    public function storeEntry(CovidCaseRequest $request)
     {
         $input = $request->validated();
         $input['date'] = date('Y-m-d',strtotime($input['date']));
@@ -25,18 +24,13 @@ class BackendController extends Controller
         return redirect('/listing');
     }
 
-    public function CaseListing(Request $request)
+    public function caseListing(Request $request)
     {
         $query = CovidCase::query();
         if($request->isMethod('POST'))
         {
             $query->search($request->province_id,$request->date);
         }
-        $sum_case = $query->sum('total');
-        $sum_deaths = $query->sum('deaths');
-        $sum_recovered = $query->sum('recovered');
-        $sum_community = $query->sum('community_case');
-        $sum_foreigner = $query->sum('foreigner_case');
         $case = $query->select('province_id','date',
             DB::raw("SUM(total) AS total"),
             DB::raw("SUM(recovered) AS recovered"),
@@ -44,20 +38,25 @@ class BackendController extends Controller
             DB::raw("SUM(community_case) AS community_case"),
             DB::raw("SUM(foreigner_case) AS foreigner_case")
         )->groupBy('province_id')->groupBy('date')->get();
-        return view('case-Listing',compact('case','sum_case','sum_deaths','sum_recovered','sum_community','sum_foreigner'));
+        $sum_case = $case->sum('total');
+        $sum_deaths = $case->sum('deaths');
+        $sum_recovered = $case->sum('recovered');
+        $sum_community = $case->sum('community_case');
+        $sum_foreigner = $case->sum('foreigner_case');
+        return view('case-listing',compact('case','sum_case','sum_deaths','sum_recovered','sum_community','sum_foreigner'));
     }
-    public function CreateProvince()
+    public function createProvince()
     {
         return view('create-province');
     }
-    public function StoreProvince(ProvinceStoreRequest $request)
+    public function storeProvince(ProvinceStoreRequest $request)
     {
         Province::insert([
            'name' => $request->name
         ]);
         return redirect('/provinces');
     }
-    public function ProvinceList()
+    public function provinceList()
     {
         $provinces = Province::select('name')->get();
         return view('provinces',compact('provinces'));
