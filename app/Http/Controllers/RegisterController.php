@@ -2,39 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests\CreateRegisterRequest;
-use App\Http\Requests\CreateLoginRequest;
-use Input;
-use Validator;
-use Redirect;
+use App\Http\Requests\UserStoreRequest;
 use App\Models\User;
-use Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function index(CreateRegisterRequest $request)
+    public function createAccount()
     {
-            $user = new User();
-            $user->name     = $request->input('username');
-            $user->email        = $request->input('email');
-            $user->password     = bcrypt($request->input('password'));
-            $user->save();
-
-            return Redirect::to('register')->with('success', 'successfully registered');
+        return view('create-account');
     }
-
-    public function login(CreateLoginRequest $request)
+    public function register(UserStoreRequest $request)
     {
-            $data = array(
-                'email' => Input::get('email'),
-                'password' => Input::get('password')
-            );
-
-            if(Auth::attempt($data)){
-                return Redirect::to('entry');
-            }else{
-                return Redirect::to('signin');
-            }
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->save();
+        return redirect()->route('SignIn')->with('success','Register success');
+    }
+    public function signInForm()
+    {
+        return view('sign-in');
+    }
+    public function signIn(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        $credentials = $request->only('email', 'password');
+        if(Auth::attempt($credentials)){
+            return redirect('/');
+        }
+        return redirect()->back()->with('error','Login Fails');
+    }
+    public function signOut()
+    {
+        Auth::logout();
+        return redirect('/');
     }
 }

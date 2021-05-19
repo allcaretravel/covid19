@@ -2,106 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CovidCaseRequest;
+use App\Http\Requests\ProvinceStoreRequest;
+use App\Models\Models\CovidCase;
+use App\Models\Models\Province;
 use Illuminate\Http\Request;
-use Input;
-use Validator;
-use Redirect;
-use DB;
-use App\Models\CovidArea;
-use App\Models\CovidList;
-use App\Models\CovidCase;
-use App\Models\CovidProvince;
-use App\Http\Requests\CreateBackendRequest;
+use Illuminate\Support\Facades\DB;
 
 class BackendController extends Controller
 {
-    public function store(CreateBackendRequest $request)
-    {        
-            $store = new CovidList();
-            $store->area        = $request->input('area');
-            $store->province    = $request->input('province');
-            $store->case    = $request->input('case');
-            $store->date    = $request->input('date');
-            $store->amount    = $request->input('amount');
-
-            $store->save();
-            return Redirect::to('entry')->with('success', 'successfully submited');
-            
+    public function entry()
+    {
+        return view('case-entry');
     }
 
-    public function displayEntry()
+    public function storeEntry(CovidCaseRequest $request)
     {
-        $case = CovidCase::get();       
-        $join = new CovidArea;
-        $value = $join->JoinData();
-        
-        return view('entry' ,
-                    [
-                        'value' => $value,
-                        'case' => $case,                    
-                    ]);
+        $input = $request->validated();
+        $input['date'] = date('Y-m-d',strtotime($input['date']));
+        CovidCase::create($input);
+        return redirect('/listing');
     }
 
-    public function fetch(Request $request)
+    public function caseListing(Request $request)
     {
-        $select = $request->get('select');
-        $value = $request->get('value');
-        $dependent = $request->get('dependent');  
-        $join = new CovidArea;
-        $data = $join->JoinFetch()
-                      ->where($select, $value)
-                      ->groupBy($dependent)
-                      ->get();
-
-        $output = '<option value="">Select Province</option>';
-        foreach($data as $row)
+        $query = CovidCase::query();
+        if($request->isMethod('POST'))
         {
-            $output .= '<option value="'.$row->$dependent.'">'.$row->$dependent.'</option>';
+            $query->search($request->province_id,$request->date);
         }
-        echo $output;
+        $case = $query->select('province_id','date',
+            DB::raw("SUM(total) AS total"),
+            DB::raw("SUM(recovered) AS recovered"),
+            DB::raw("SUM(deaths) AS deaths"),
+            DB::raw("SUM(community_case) AS community_case"),
+            DB::raw("SUM(foreigner_case) AS foreigner_case")
+        )->groupBy('province_id')->groupBy('date')->get();
+        $sum_case = $case->sum('total');
+        $sum_deaths = $case->sum('deaths');
+        $sum_recovered = $case->sum('recovered');
+        $sum_community = $case->sum('community_case');
+        $sum_foreigner = $case->sum('foreigner_case');
+        return view('case-listing',compact('case','sum_case','sum_deaths','sum_recovered','sum_community','sum_foreigner'));
     }
-
-    public function displayListing()
-    {         
-        $sum_amount = new CovidList;
-        $total = $sum_amount->sumAmount();
-        $totalArea = $sum_amount->sumArea();
-        $totalProvince = $sum_amount->sumProvince();
-        $totalCase = $sum_amount->sumCase();
-
-        $list = Covidlist::paginate(5);
-        return view('listing', 
-                    [
-                        'list' => $list,
-                        'total'=> $total,
-                        'sum_area'=> $totalArea,
-                        'sum_province'=> $totalProvince,
-                        'sum_case'=> $totalCase,
-                    ]);
-    }
-
-    public function search(Request $request)
+    public function createProvince()
     {
-        $sum_amount = new CovidList;
-        $total = $sum_amount->sumAmount();
-        $totalArea = $sum_amount->sumArea();
-        $totalProvince = $sum_amount->sumProvince();
-        $totalCase = $sum_amount->sumCase();
-
-        $search_text = $request->get('search');
-        $list = CovidList::where('area', 'LIKE', '%' . $search_text . '%')
-                        ->orwhere('province', 'LIKE', '%' . $search_text . '%')  
-                        ->orwhere('case', 'LIKE', '%' . $search_text . '%')  
-                        ->orwhere('date', 'LIKE', '%' . $search_text . '%')  
-                        ->paginate(5);
-        
-        return view('listing',
-                     [
-                         'list' => $list, 
-                         'total'=> $total,
-                         'sum_area'=> $totalArea,
-                         'sum_province'=> $totalProvince,
-                         'sum_case'=> $totalCase,
-                    ]);
+        return view('create-province');
+    }
+    public function storeProvince(ProvinceStoreRequest $request)
+    {
+        Province::insert([
+           'name' => $request->name
+        ]);
+        return redirect('/provinces');
+    }
+    public function provinceList()
+    {
+        $provinces = Province::select('name')->get();
+        return view('provinces',compact('provinces'));
     }
 }

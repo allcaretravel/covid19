@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\BackendController;
+use App\Http\Controllers\RegisterController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,35 +16,20 @@ use App\Http\Controllers\BackendController;
 */
 
 Route::get('/', function () {
-    return view('index');
-    // resouce/views/welcome.blade
+    return view('welcome');
 });
+Route::get('register',[RegisterController::class,'createAccount'])->name('CreateAccount');
+Route::post('register',[RegisterController::class,'register'])->name('Register');
+Route::get('sign-in',[RegisterController::class,'signInForm'])->name('SignInForm');
+Route::post('sign-in',[RegisterController::class,'signIn'])->name('SignIn');
+Route::get('sign-out',[RegisterController::class,'signOut'])->name('SignOut');
 
-Route::get('/signin', function () {
-    return view('login');
-    // resouce/views/login.blade
+
+Route::group(['middleware' => 'auth'],function (){
+    Route::get('entry',[BackendController::class,'entry'])->name('Entry');
+    Route::post('entry',[BackendController::class,'storeEntry'])->name('StoreEntry');
+    Route::any('listing',[BackendController::class,'caseListing'])->name('listing');
+    Route::get('provinces',[BackendController::class,'provinceList'])->name('ProvinceList');
+    Route::get('create-province',[BackendController::class,'createProvince'])->name('CreateProvince');
+    Route::post('provinces',[BackendController::class,'storeProvince'])->name('StoreProvince');
 });
-
-Route::get('/register', function () {
-    return view('register');
-    // resouce/views/register.blade
-});
-
-Route::post('/register_action', [RegisterController::class, 'index']);
-
-Route::post('/entry', [RegisterController::class, 'login']);
-
-Route::get('/signout', function() {
-    Auth::logout();
-
-    return Redirect::to('signin');
-})->middleware('auth');
-
-Route::resource('covid',  BackendController::class);
-
-Route::get('/entry', [BackendController::class, 'displayEntry'])->middleware('auth');
-Route::post('entry/fetch', [BackendController::class, 'fetch'])->name('dynamicdependent.fetch');
-
-Route::get('/listing', [BackendController::class, 'displayListing'])->middleware('auth');
-
-Route::get('/search', [BackendController::class, 'search'])->middleware('auth');

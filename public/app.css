@@ -1,0 +1,17 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css";
+nav.bg-light
+{
+    background-color: #1a202c!important;
+}
+a.navbar-brand,a.nav-link
+{
+    color: #ffffff!important;
+}
+.invalid-feedback
+{
+    display: block;
+}
+.nav-item.active > a
+{
+    font-weight: bold!important;
+}
