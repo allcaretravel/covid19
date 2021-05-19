@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Requests\RegisterRequest;
@@ -61,10 +62,6 @@ class AuthController extends Controller
                 return Redirect::back()->withInput(Input::all());
             }
             return redirect()->back()->with('success', 'Register successfull'); 
-            // return response()->json([
-            //     'access_token' => $token,
-            //     'token_type' => 'Bearer'
-            // ]);
         } catch (\Exception $e) {
             throw ($e);
         }

@@ -14,7 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-Route::post('/register', 'AuthController@register');
+Route::prefix("v1/admin")
+     ->group(function () {
+        Route::post('/register', 'AuthController@register');
+        Route::post('/login', 'AuthController@login');
+});
+
+Route::group([
+        'prefix' => 'v1/admin',  
+        'middleware' => 'auth:sanctum'
+], function(){
+        Route::get('/logout', 'AuthController@logout');
+        Route::get('/covids', 'CovidController@index');
+});
