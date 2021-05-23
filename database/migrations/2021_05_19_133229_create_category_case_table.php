@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateListcovidsTable extends Migration
+class CreateCategoryCaseTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateListcovidsTable extends Migration
      */
     public function up()
     {
-        Schema::create('listcovids', function (Blueprint $table) {
+        Schema::create('category_case', function (Blueprint $table) {
             $table->id();
-            $table->string('area');
-            $table->string('province');
-            $table->string('case');
-            $table->date('date');
-            $table->integer('amount');
-            $table->timestamps();
+            $table->string('categorycase_name');
+            $table->integer('status');
         });
     }
 
@@ -31,6 +27,6 @@ class CreateListcovidsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('listcovids');
+        Schema::dropIfExists('category_case');
     }
 }

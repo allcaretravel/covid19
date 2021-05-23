@@ -1,53 +1,93 @@
-@extends('layout')
+<!DOCTYPE html>
+<html lang="en">
+  @include('includes/header')
+  <style>
+      *{
+          box-sizing: border-box;
+      }
+      body{
+          background: #757575;
+height: 100%;
+margin: 0;
+      }
+#login-form{
+    width: 500px;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+  </style>
+<body>
+    
+   <div class="container">
+       <div id="login-form">
+        <div class="card">
 
-@section('content')
+            <h5 class="card-header info-color white-text text-center py-4">
+              <strong>Sign Up</strong>
+            </h5>
+          
+            <!--Card content-->
+            <div class="card-body px-lg-5 pt-0">
 
-<h2>Request Form</h2>
+              @if ($message = Session::get('error'))
+<div class="alert alert-danger mt-2">
+{{ $message}}
+</div>
+              @endif
 
-    <!-- message -->
-    @if(Session::has('success'))
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-success">
-                    {{Session::get('success')}}
+          @if (count($errors) > 0)
+
+          <div class="alert alert-danger mt-2">
+            <ul>
+              @foreach ($errors->all() as $error)
+    <li> {{ $error }} </li>
+              @endforeach
+            </ul>
+           
+          </div>
+          @endif
+              <!-- Form -->
+              <form class="text-center" style="color: #757575;" action=" {{ url('/sign_up/checkRegister') }} ">
+          {{ csrf_field() }}
+ <!-- Email -->
+ <div class="md-form">
+    <input type="text" name="username" class="form-control">
+    <label >Username</label>
+  </div>
+
+                <!-- Email -->
+                <div class="md-form">
+                  <input type="text" name="email" class="form-control">
+                  <label for="materialLoginFormEmail">E-mail</label>
                 </div>
+          
+                <!-- Password -->
+                <div class="md-form">
+                  <input type="password" name="password" class="form-control">
+                  <label for="materialLoginFormPassword">Password</label>
+                </div>
+
+                   <!-- Password -->
+                   <div class="md-form">
+                    <input type="password" name="confirmpassword" class="form-control">
+                    <label for="materialLoginFormPassword">Confirm Password</label>
+                  </div>
+          
+                          <!-- Sign in button -->
+                <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit"> Sign up </button>
+              </form>
+              <!-- Form -->
+          
             </div>
-        </div>
-    @endif
+          
+          </div>
+       </div>
 
-    <form action="/register_action" method="post">
-    @csrf
-        
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="name" class="form-control" id="name" placeholder="Enter name" name="username">
+   </div>
 
-            @if($errors->has('username')) <p>{{$errors->first('username')}}</p> @endif <!-- message -->
-        </div>
-
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
-
-            @if($errors->has('email')) <p>{{$errors->first('email')}}</p> @endif
-        </div>
-
-        <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
-
-            @if($errors->has('password')) <p>{{$errors->first('password')}}</p> @endif
-        </div>
-
-        <div class="form-group">
-            <label for="pwd">Confirm Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter confirm password" name="password_confirmation">
-
-            @if($errors->has('cpassword')) <p>{{$errors->first('cpassword')}}</p> @endif
-        </div>
-
-        <button type="submit" class="btn btn-default">CREATE ACCOUNT</button>
-
-    </form>
-
-@endsection
+    @include('includes/footer')
+    @include('includes/scripts')
+</body>
+</html>

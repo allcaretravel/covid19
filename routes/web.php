@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\BackendController;
-
+use app\Http\Controllers\LoginController;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,36 +14,23 @@ use App\Http\Controllers\BackendController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-    // resouce/views/welcome.blade
-});
+// Route::get('/', function () {
+//     return view('login');
+// })->name('/');
 
-Route::get('/signin', function () {
-    return view('login');
-    // resouce/views/login.blade
-});
 
-Route::get('/register', function () {
-    return view('register');
-    // resouce/views/register.blade
-});
+// Route::get('/login', function () {
+//     return view('login');
+// });
+Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
+Route::get('/sign_in', 'App\Http\Controllers\LoginController@index');
+Route::get('/sign_out', 'App\Http\Controllers\LoginController@logout');
+Route::get('/sign_up', 'App\Http\Controllers\RegisterController@index');
+Route::get('/sign_up/checkRegister', 'App\Http\Controllers\RegisterController@checkRegister');
+Route::get('/login/checklogin', 'App\Http\Controllers\LoginController@checklogin');
+Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+Route::get('/filterArea', 'App\Http\Controllers\HomeController@filterArea')->name('filterArea');
+Route::get('/get_chart_totalCase', 'App\Http\Controllers\HomeController@get_chart_totalCase');
+Auth::routes();
 
-Route::post('/register_action', [RegisterController::class, 'index']);
-
-Route::post('/entry', [RegisterController::class, 'login']);
-
-Route::get('/signout', function() {
-    Auth::logout();
-
-    return Redirect::to('signin');
-})->middleware('auth');
-
-Route::resource('covid',  BackendController::class);
-
-Route::get('/entry', [BackendController::class, 'displayEntry'])->middleware('auth');
-Route::post('entry/fetch', [BackendController::class, 'fetch'])->name('dynamicdependent.fetch');
-
-Route::get('/listing', [BackendController::class, 'displayListing'])->middleware('auth');
-
-Route::get('/search', [BackendController::class, 'search'])->middleware('auth');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
